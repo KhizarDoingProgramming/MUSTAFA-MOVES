@@ -4,12 +4,10 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Send,
-  Sparkles,
   Bot,
   User,
-  ArrowLeft,
+  Sparkles,
 } from "lucide-react";
-import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { FloatingAIButton } from "@/components/layout/FloatingAIButton";
 import { cn } from "@/lib/utils";
@@ -27,7 +25,7 @@ const initialMessages = [
     id: "1",
     role: "assistant" as const,
     content:
-      "Hey! I'm Mstfa, your AI fitness coach. Tell me about your goals — whether it's building muscle, losing fat, getting stronger, or just staying fit. I'm here to help!",
+      "Hey! I'm Mstfa, your AI fitness coach. Tell me about your goals — whether it's building muscle, losing fat, getting stronger, or just staying fit. I'm here to help — fr!",
     timestamp: new Date(),
   },
 ];
@@ -69,7 +67,7 @@ export default function ChatPage() {
 
     try {
       const chatMessages = [...messages, userMessage].map((m) => ({
-        role: m.role,
+        role: m.role as "user" | "assistant",
         content: m.content,
       }));
 
@@ -86,8 +84,7 @@ export default function ChatPage() {
       const fallback: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content:
-          "My bad, I hit a glitch. Can you try asking me again?",
+        content: "My bad, I hit a glitch. Can you try asking me again?",
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, fallback]);
@@ -100,23 +97,18 @@ export default function ChatPage() {
     <div className="min-h-screen bg-[var(--color-bg-primary)] flex flex-col">
       <Navbar />
       <FloatingAIButton />
-      <main className="flex flex-col h-screen">
+      <main className="flex flex-col h-screen pt-20">
+        {/* Chat Header */}
         <motion.header
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)]/50 backdrop-blur-md px-6 py-4 flex items-center gap-4 flex-shrink-0"
+          className="border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)]/50 backdrop-blur-md px-6 py-4 flex items-center gap-3 flex-shrink-0"
         >
-          <Link href="/" className="md:hidden">
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
-          <div className="w-10 h-10 rounded-xl bg-[var(--color-accent)]/10 flex items-center justify-center">
-            <Bot className="w-5 h-5 text-white" />
+          <div className="w-10 h-10 rounded-[var(--radius-md)] bg-[var(--color-accent-soft)] flex items-center justify-center">
+            <Bot className="w-5 h-5 text-[var(--color-accent)]" />
           </div>
           <div>
-            <h1 className="text-sm font-semibold font-[family-name:var(--font-space)]">
-              Mstfa AI
-            </h1>
+            <h1 className="text-sm font-[600]">Mstfa AI</h1>
             <p className="text-xs text-[var(--color-success)] flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-success)] animate-pulse" />
               Online
@@ -124,6 +116,7 @@ export default function ChatPage() {
           </div>
         </motion.header>
 
+        {/* Messages */}
         <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
           <AnimatePresence>
             {messages.map((message) => (
@@ -140,24 +133,24 @@ export default function ChatPage() {
               >
                 <div
                   className={cn(
-                    "w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0",
+                    "w-8 h-8 rounded-[var(--radius-md)] flex items-center justify-center flex-shrink-0",
                     message.role === "assistant"
-                      ? "bg-[var(--color-accent)]/10"
+                      ? "bg-[var(--color-accent-soft)]"
                       : "bg-[var(--color-bg-tertiary)]"
                   )}
                 >
                   {message.role === "assistant" ? (
-                    <Sparkles className="w-4 h-4 text-white" />
+                    <Bot className="w-4 h-4 text-[var(--color-accent)]" />
                   ) : (
-                    <User className="w-4 h-4" />
+                    <User className="w-4 h-4 text-[var(--color-text-secondary)]" />
                   )}
                 </div>
                 <div
                   className={cn(
-                    "rounded-2xl px-4 py-3 max-w-[80%]",
+                    "rounded-[var(--radius-lg)] px-4 py-3 max-w-[80%]",
                     message.role === "assistant"
                       ? "bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-tl-sm"
-                      : "bg-[var(--color-accent)] text-white rounded-tr-sm"
+                      : "bg-[var(--color-accent)] text-[#0d0d0d] rounded-tr-sm"
                   )}
                 >
                   <div className="text-sm leading-relaxed whitespace-pre-wrap">
@@ -182,20 +175,16 @@ export default function ChatPage() {
                 exit={{ opacity: 0, y: -10 }}
                 className="flex gap-3 max-w-3xl"
               >
-                <div className="w-8 h-8 rounded-xl bg-[var(--color-accent)]/10 flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-4 h-4 text-white" />
+                <div className="w-8 h-8 rounded-[var(--radius-md)] bg-[var(--color-accent-soft)] flex items-center justify-center flex-shrink-0">
+                  <Bot className="w-4 h-4 text-[var(--color-accent)]" />
                 </div>
-                <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-2xl rounded-tl-sm px-4 py-3">
-                  <div className="flex gap-1">
+                <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-[var(--radius-lg)] rounded-tl-sm px-4 py-3">
+                  <div className="flex gap-1.5">
                     {[0, 0.2, 0.4].map((delay) => (
                       <motion.div
                         key={delay}
-                        animate={{ scale: [1, 1.3, 1] }}
-                        transition={{
-                          duration: 0.6,
-                          repeat: Infinity,
-                          delay,
-                        }}
+                        animate={{ scale: [1, 1.4, 1] }}
+                        transition={{ duration: 0.6, repeat: Infinity, delay }}
                         className="w-2 h-2 rounded-full bg-[var(--color-text-tertiary)]"
                       />
                     ))}
@@ -208,6 +197,7 @@ export default function ChatPage() {
           <div ref={messagesEndRef} />
         </div>
 
+        {/* Suggestions */}
         {messages.length <= 1 && (
           <div className="px-6 pb-4 flex flex-wrap gap-2">
             {suggestions.map((s) => (
@@ -216,7 +206,7 @@ export default function ChatPage() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setInput(s)}
-                className="px-4 py-2 rounded-full glass text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors font-[family-name:var(--font-sora)]"
+                className="px-4 py-2 rounded-full bg-[var(--color-bg-secondary)] border border-[var(--color-border)] text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-border-strong)] transition-all"
               >
                 {s}
               </motion.button>
@@ -224,8 +214,9 @@ export default function ChatPage() {
           </div>
         )}
 
+        {/* Input */}
         <div className="px-6 pb-6 pt-2 flex-shrink-0">
-          <div className="glass rounded-2xl p-2 flex items-center gap-2">
+          <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-[var(--radius-xl)] p-2 flex items-center gap-2">
             <input
               type="text"
               value={input}
@@ -240,9 +231,9 @@ export default function ChatPage() {
               onClick={handleSend}
               disabled={!input.trim()}
               className={cn(
-                "w-10 h-10 rounded-xl flex items-center justify-center transition-all",
+                "w-10 h-10 rounded-[var(--radius-md)] flex items-center justify-center transition-all flex-shrink-0",
                 input.trim()
-                  ? "bg-[var(--color-accent)] text-white shadow-lg shadow-[var(--color-accent)]/20"
+                  ? "bg-[var(--color-accent)] text-[#0d0d0d]"
                   : "bg-[var(--color-bg-tertiary)] text-[var(--color-text-tertiary)]"
               )}
             >

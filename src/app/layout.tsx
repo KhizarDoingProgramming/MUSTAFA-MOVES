@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Instrument_Sans, Space_Grotesk, Inter, Sora } from "next/font/google";
+import { Instrument_Sans, Space_Grotesk, Inter } from "next/font/google";
 import { ThemeProvider } from "@/hooks/useTheme";
 import { AuthProvider } from "@/hooks/useAuth";
 import "./globals.css";
@@ -22,12 +22,6 @@ const inter = Inter({
   display: "swap",
 });
 
-const sora = Sora({
-  subsets: ["latin"],
-  variable: "--font-sora",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   title: "MustafaMoves — AI-Powered Fitness",
   description:
@@ -43,7 +37,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`dark ${instrumentSans.variable} ${spaceGrotesk.variable} ${inter.variable} ${sora.variable}`}
+      className={`dark ${instrumentSans.variable} ${spaceGrotesk.variable} ${inter.variable}`}
     >
       <body>
         <ThemeProvider>

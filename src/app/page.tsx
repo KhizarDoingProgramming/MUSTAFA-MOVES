@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   Dumbbell,
@@ -10,6 +11,8 @@ import {
   Flame,
   MessageCircle,
   Sparkles,
+  ChevronRight,
+  Bot,
 } from "lucide-react";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
@@ -61,236 +64,335 @@ const stats = [
   { value: "4.9", label: "App Rating" },
 ];
 
+function useRevealOnScroll() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return { ref, visible };
+}
+
+function RevealSection({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+  const { ref, visible } = useRevealOnScroll();
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-800 ${className}`}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(40px)",
+        transitionDelay: `${delay}s`,
+        transitionDuration: "0.8s",
+        transitionTimingFunction: "cubic-bezier(0.25, 0.1, 0.25, 1)",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
 export default function HomePage() {
+  const { scrollYProgress } = useScroll();
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.95]);
+
+  const tickerItems = [
+    "AI-POWERED FITNESS", "TRAIN SMARTER", "NO CAP", "LET'S GET IT",
+    "MSTFA AI COACH", "BUILD MUSCLE", "LOSE FAT", "STAY STRONG",
+    "AI-POWERED FITNESS", "TRAIN SMARTER", "NO CAP", "LET'S GET IT",
+    "MSTFA AI COACH", "BUILD MUSCLE", "LOSE FAT", "STAY STRONG",
+  ];
+
   return (
     <div className="min-h-screen bg-[var(--color-bg-primary)]">
       <Navbar />
       <FloatingAIButton />
 
-      {/* Hero */}
-      <section
-        id="home"
-        className="h-screen flex flex-col justify-center items-center px-6"
+      {/* Hero Section — full viewport, Kerna-style */}
+      <motion.section
+        style={{ opacity: heroOpacity, scale: heroScale }}
+        className="h-screen flex flex-col justify-center items-center px-6 relative overflow-hidden"
       >
-        <div className="text-center max-w-5xl mx-auto">
+        {/* Ambient glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[var(--color-accent)]/5 blur-[150px] pointer-events-none" />
+
+        <div className="text-center max-w-5xl mx-auto relative z-10">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-sm text-[var(--color-accent)] font-[500] tracking-[0.2em] uppercase mb-6"
+          >
+            AI-Powered Fitness Coach
+          </motion.p>
+
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="text-[clamp(36px,7vw,80px)] font-[500] tracking-tight leading-[1.05]"
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+            className="text-[clamp(40px,8vw,88px)] font-[600] tracking-[-0.04em] leading-[1.05] text-glow"
           >
-            Transform your fitness
+            Transform your
             <br />
-            into a{" "}
-            <span className="text-[var(--color-accent)] font-[600] tracking-[-0.03em]">
-              charismatic journey
-            </span>
+            fitness into a{" "}
+            <span className="text-[var(--color-accent)]">charismatic</span>
+            <br />
+            journey
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
             className="text-[var(--color-text-secondary)] text-lg md:text-xl mt-6 max-w-2xl mx-auto leading-relaxed"
           >
             Your personal AI fitness assistant that builds custom workout plans,
-            guides your exercises, and keeps you motivated.
+            guides your exercises, and keeps you motivated — fr.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-            className="mt-10"
+            transition={{ duration: 0.8, delay: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Link
               href="/chat"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--color-accent)] text-[#1a1a1a] font-[500] text-sm hover:bg-[var(--color-accent-hover)] transition-colors"
+              className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[var(--color-accent)] text-[#0d0d0d] font-[600] text-sm hover:bg-[var(--color-accent-hover)] transition-all duration-300"
             >
               Chat with Mstfa
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link
+              href="/workout-generator"
+              className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-white/20 text-white/80 hover:text-white hover:border-white/40 transition-all duration-300 text-sm font-[500]"
+            >
+              Generate Workout
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
         </div>
-      </section>
+      </motion.section>
+
+      {/* Marquee Ticker — GEN-Z style like mustav */}
+      <div className="marquee border-y border-[var(--color-border)] py-4 md:py-5">
+        <div className="marquee-track">
+          {tickerItems.map((item, i) => (
+            <span
+              key={i}
+              className="text-[clamp(14px,2vw,20px)] font-[600] tracking-[0.15em] text-white/10 px-8 uppercase"
+            >
+              {item}
+              <span className="text-[var(--color-accent)] ml-8">✦</span>
+            </span>
+          ))}
+        </div>
+      </div>
 
       {/* Features Grid */}
       <section className="section-padding max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-5xl font-[500] tracking-tight">
-            Everything you need to{" "}
-            <span className="text-[var(--color-accent)]">level up</span>
-          </h2>
-          <p className="text-[var(--color-text-secondary)] text-lg max-w-2xl mx-auto mt-4">
-            A complete fitness ecosystem powered by AI, designed to keep you
-            going.
-          </p>
-        </motion.div>
+        <RevealSection>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-[600] tracking-tight">
+              Everything you need to{" "}
+              <span className="text-[var(--color-accent)]">level up</span>
+            </h2>
+            <p className="text-[var(--color-text-secondary)] text-lg max-w-2xl mx-auto mt-4">
+              A complete fitness ecosystem powered by AI, designed to keep you
+              going — no cap.
+            </p>
+          </div>
+        </RevealSection>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {features.map((feature, i) => (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: i * 0.05 }}
-            >
+            <RevealSection key={feature.title} delay={i * 0.05}>
               <Link
                 href={feature.href}
-                className="block p-6 rounded-[var(--radius-lg)] bg-card hover:bg-[var(--color-surface-hover)] transition-all duration-300 group h-full"
+                className="block p-6 md:p-8 rounded-[var(--radius-lg)] bg-card hover:bg-[var(--color-surface-hover)] hover:border-[var(--color-border-strong)] transition-all duration-300 group h-full"
               >
-                <feature.icon className="w-6 h-6 text-[var(--color-accent)] mb-4" />
-                <h3 className="text-lg font-[500] mb-2 flex items-center gap-2">
+                <div className="w-10 h-10 rounded-[var(--radius-md)] bg-[var(--color-accent-soft)] flex items-center justify-center mb-4">
+                  <feature.icon className="w-5 h-5 text-[var(--color-accent)]" />
+                </div>
+                <h3 className="text-lg font-[600] mb-2 flex items-center gap-2">
                   {feature.title}
-                  <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                  <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-[var(--color-accent)]" />
                 </h3>
                 <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
                   {feature.desc}
                 </p>
               </Link>
-            </motion.div>
+            </RevealSection>
           ))}
         </div>
       </section>
 
       {/* Stats */}
       <section className="section-padding max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="bg-card rounded-[var(--radius-2xl)] p-8 md:p-12"
-        >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="text-center"
-              >
-                <div className="text-3xl md:text-4xl font-[500] tracking-tight mb-1 text-[var(--color-accent)]">
-                  {stat.value}
-                </div>
-                <div className="text-sm text-[var(--color-text-secondary)]">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
+        <RevealSection>
+          <div className="bg-card rounded-[var(--radius-2xl)] p-8 md:p-16">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+              {stats.map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="text-center"
+                >
+                  <div className="text-4xl md:text-5xl font-[600] tracking-tight mb-1 text-[var(--color-accent)]">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm text-[var(--color-text-secondary)]">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </motion.div>
+        </RevealSection>
       </section>
 
-      {/* Preview / AI Coach */}
+      {/* AI Coach Preview — split layout like Kerna */}
       <section className="section-padding max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-5xl font-[500] tracking-tight mb-4">
-              Your AI coach,{" "}
-              <span className="text-[var(--color-accent)]">always ready</span>
-            </h2>
-            <p className="text-[var(--color-text-secondary)] text-lg mb-6 leading-relaxed">
-              Mstfa understands your goals, tracks your progress, and adapts
-              your plan in real-time. No two workouts are the same.
-            </p>
-            <Link
-              href="/chat"
-              className="inline-flex items-center gap-2 text-sm font-[500] text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
-            >
-              Meet Mstfa
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="relative"
-          >
-            <div className="bg-card rounded-[var(--radius-2xl)] overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=80"
-                alt="Premium gym environment"
-                className="w-full aspect-video object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-transparent rounded-[var(--radius-2xl)]" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center">
+          <RevealSection>
+            <div>
+              <p className="text-sm text-[var(--color-accent)] font-[500] tracking-[0.15em] uppercase mb-4">
+                Preview
+              </p>
+              <h2 className="text-3xl md:text-5xl font-[600] tracking-tight mb-4">
+                Your AI coach,{" "}
+                <span className="text-[var(--color-accent)]">always ready</span>
+              </h2>
+              <p className="text-[var(--color-text-secondary)] text-lg mb-6 leading-relaxed">
+                Mstfa understands your goals, tracks your progress, and adapts
+                your plan in real-time. No two workouts are the same — fr.
+              </p>
+              <Link
+                href="/chat"
+                className="group inline-flex items-center gap-2 text-sm font-[600] text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
+              >
+                Meet Mstfa
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-4 -right-4 bg-card border border-[var(--color-border)] rounded-[var(--radius-lg)] p-4 shadow-xl"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-[var(--radius-md)] bg-[var(--color-accent)]/10 flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-[var(--color-accent)]" />
+          </RevealSection>
+
+          <RevealSection delay={0.15}>
+            <div className="relative">
+              <div className="bg-card rounded-[var(--radius-2xl)] overflow-hidden">
+                <div className="aspect-[4/3] bg-gradient-to-br from-[var(--color-accent-soft)] to-transparent flex items-center justify-center">
+                  <Bot className="w-24 h-24 text-[var(--color-accent)]/30" />
                 </div>
-                <div>
-                  <p className="text-sm font-[500]">AI Ready</p>
-                  <p className="text-xs text-[var(--color-text-secondary)]">Plan generated</p>
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-transparent rounded-[var(--radius-2xl)]" />
               </div>
-            </motion.div>
-          </motion.div>
+              <motion.div
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -bottom-4 -right-4 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-[var(--radius-lg)] p-4 shadow-xl"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-[var(--radius-md)] bg-[var(--color-accent-soft)] flex items-center justify-center">
+                    <Sparkles className="w-5 h-5 text-[var(--color-accent)]" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-[600]">AI Ready</p>
+                    <p className="text-xs text-[var(--color-text-secondary)]">Plan generated</p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </RevealSection>
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Process / Steps — Kerna inspired */}
       <section className="section-padding max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
-          className="relative rounded-[var(--radius-2xl)] overflow-hidden bg-[var(--color-accent)]"
-        >
-          <div className="relative z-10 p-12 md:p-20 text-center text-[#1a1a1a]">
-            <h2 className="text-3xl md:text-5xl font-[500] tracking-tight mb-4">
-              Ready to transform?
+        <RevealSection>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-[600] tracking-tight">
+              How it{" "}
+              <span className="text-[var(--color-accent)]">works</span>
             </h2>
-            <p className="text-lg opacity-80 max-w-xl mx-auto mb-8">
-              Join thousands training smarter with Mstfa AI.
+            <p className="text-[var(--color-text-secondary)] text-lg max-w-2xl mx-auto mt-4">
+              Four simple steps to transform your fitness journey.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href="/chat"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1a1a1a] text-white font-[500] text-sm hover:bg-[#2a2a2a] transition-colors"
-              >
-                Get Started Free
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/exercise-library"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/20 text-[#1a1a1a] font-[500] text-sm hover:bg-white/30 transition-colors"
-              >
-                Browse Exercises
-              </Link>
+          </div>
+        </RevealSection>
+
+        <div className="space-y-4">
+          {[
+            { num: "01", title: "Tell Mstfa your goals", desc: "Share your fitness level, age, weight, and what you want to achieve." },
+            { num: "02", title: "Get your AI plan", desc: "Mstfa generates a personalized weekly workout plan tailored to you." },
+            { num: "03", title: "Train & track", desc: "Follow your plan, log workouts, and watch your progress grow." },
+            { num: "04", title: "Level up", desc: "Mstfa adapts your plan as you get stronger. Keep progressing." },
+          ].map((step, i) => (
+            <RevealSection key={step.num} delay={i * 0.08}>
+              <div className="bg-card rounded-[var(--radius-xl)] p-6 md:p-8 flex items-start gap-6 md:gap-8 group hover:bg-[var(--color-surface-hover)] transition-all duration-300">
+                <div className="text-[clamp(40px,5vw,72px)] font-[700] text-[var(--color-accent)] leading-none opacity-40 group-hover:opacity-70 transition-opacity">
+                  {step.num}
+                </div>
+                <div className="flex-1 pt-2">
+                  <h3 className="text-lg md:text-xl font-[600] mb-1">{step.title}</h3>
+                  <p className="text-sm text-[var(--color-text-secondary)]">{step.desc}</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-[var(--color-text-tertiary)] mt-3 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
+              </div>
+            </RevealSection>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA — full accent background */}
+      <section className="section-padding max-w-6xl mx-auto">
+        <RevealSection>
+          <div className="relative rounded-[var(--radius-2xl)] overflow-hidden bg-[var(--color-accent)]">
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-accent)] via-[var(--color-accent-hover)] to-[var(--color-accent)] opacity-50" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_0%,transparent_60%)]" />
+            <div className="relative z-10 p-12 md:p-20 text-center">
+              <h2 className="text-3xl md:text-5xl font-[600] tracking-tight text-[#0d0d0d] mb-4">
+                Ready to transform?
+              </h2>
+              <p className="text-lg text-[#0d0d0d]/70 max-w-xl mx-auto mb-8">
+                Join thousands training smarter with Mstfa AI — no cap.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link
+                  href="/chat"
+                  className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#0d0d0d] text-white font-[600] text-sm hover:bg-[#1a1a1a] transition-all duration-300"
+                >
+                  Get Started Free
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  href="/exercise-library"
+                  className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-white/20 text-[#0d0d0d] font-[500] text-sm hover:bg-white/30 transition-all duration-300"
+                >
+                  Browse Exercises
+                </Link>
+              </div>
             </div>
           </div>
-        </motion.div>
+        </RevealSection>
       </section>
 
       {/* Footer */}
       <footer className="section-padding max-w-6xl mx-auto text-center">
         <div className="flex items-center justify-center gap-2 mb-4">
           <Dumbbell className="w-4 h-4 text-[var(--color-accent)]" />
-          <span className="font-[500]">MustafaMoves</span>
+          <span className="font-[600]">MustafaMoves</span>
         </div>
         <p className="text-sm text-[var(--color-text-secondary)]">
           AI-Powered Fitness. Made with intensity.
