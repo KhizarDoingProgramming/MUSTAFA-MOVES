@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, Sora } from "next/font/google";
+import { Instrument_Sans, Space_Grotesk, Inter, Sora } from "next/font/google";
 import { ThemeProvider } from "@/hooks/useTheme";
 import { AuthProvider } from "@/hooks/useAuth";
 import "./globals.css";
+
+const instrumentSans = Instrument_Sans({
+  subsets: ["latin"],
+  variable: "--font-instrument",
+  display: "swap",
+});
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -37,7 +43,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${spaceGrotesk.variable} ${inter.variable} ${sora.variable}`}
+      className={`dark ${instrumentSans.variable} ${spaceGrotesk.variable} ${inter.variable} ${sora.variable}`}
     >
       <body>
         <ThemeProvider>

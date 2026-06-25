@@ -54,7 +54,7 @@ export function Button({
 }: ButtonProps) {
   const variants = {
     primary:
-      "bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] shadow-lg shadow-[var(--color-accent)]/20",
+      "bg-[var(--color-accent)] text-[#1a1a1a] hover:bg-[var(--color-accent-hover)]",
     secondary:
       "bg-[var(--color-bg-tertiary)] text-[var(--color-text-primary)] hover:bg-[var(--color-bg-tertiary)]/80 border border-[var(--color-border)]",
     ghost:

@@ -80,8 +80,8 @@ export default function SettingsPage() {
     <div className="min-h-screen bg-[var(--color-bg-primary)]">
       <Navbar />
       <FloatingAIButton />
-      <main className="md:ml-[72px] lg:ml-[240px] pb-24 md:pb-8">
-        <div className="px-6 py-6 flex items-center gap-4">
+      <main className="pb-24 md:pb-8">
+        <div className="px-6 py-6 flex items-center gap-4 pt-24">
           <Link href="/" className="md:hidden">
             <ArrowLeft className="w-5 h-5" />
           </Link>
@@ -108,7 +108,7 @@ export default function SettingsPage() {
                 Profile
               </h2>
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[var(--color-accent)] to-purple-600 flex items-center justify-center text-white font-bold text-2xl shadow-lg">
+                <div className="w-20 h-20 rounded-full bg-[var(--color-accent)] flex items-center justify-center text-[#1a1a1a] font-bold text-2xl">
                   {name.charAt(0)}
                 </div>
                 <div>
@@ -231,7 +231,7 @@ export default function SettingsPage() {
             transition={{ duration: 0.4, delay: 0.3 }}
           >
             <Card glass className="text-center">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--color-accent)] to-purple-600 flex items-center justify-center mx-auto mb-3 shadow-lg">
+              <div className="w-12 h-12 rounded-xl bg-[var(--color-accent)] flex items-center justify-center mx-auto mb-3">
                 <Dumbbell className="w-6 h-6 text-white" />
               </div>
               <h3 className="font-semibold font-[family-name:var(--font-space)]">

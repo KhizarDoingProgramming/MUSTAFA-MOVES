@@ -17,7 +17,7 @@ export default function ExerciseGuidePage() {
     <div className="min-h-screen bg-[var(--color-bg-primary)]">
       <Navbar />
       <FloatingAIButton />
-      <main className="md:ml-[72px] lg:ml-[240px] pb-24 md:pb-8">
+      <main className="pb-24 md:pb-8">
         {/* Hero */}
         <div className="relative h-[60vh] md:h-[70vh] overflow-hidden">
           <img

@@ -42,7 +42,7 @@ export default function LoginPage() {
         >
           {/* Logo */}
           <Link href="/" className="inline-flex items-center gap-3 mb-12">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--color-accent)] to-purple-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-[var(--color-accent)] flex items-center justify-center">
               <Dumbbell className="w-5 h-5 text-white" />
             </div>
             <span className="text-lg font-bold font-[family-name:var(--font-space)] tracking-tight">
@@ -157,9 +157,9 @@ export default function LoginPage() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="absolute bottom-12 left-12 right-12"
         >
-          <div className="glass rounded-3xl p-8 max-w-md">
-            <Sparkles className="w-8 h-8 text-[var(--color-accent)] mb-4" />
-            <h2 className="text-2xl font-bold font-[family-name:var(--font-space)] text-white mb-2">
+          <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-2xl)] p-8 max-w-md backdrop-blur-md">
+              <Dumbbell className="w-8 h-8 text-[var(--color-accent)] mb-4" />
+            <h2 className="text-2xl font-[500] text-white mb-2">
               Your journey continues
             </h2>
             <p className="text-white/70 text-sm leading-relaxed">

@@ -27,8 +27,8 @@ export default function ExerciseLibraryPage() {
     <div className="min-h-screen bg-[var(--color-bg-primary)]">
       <Navbar />
       <FloatingAIButton />
-      <main className="md:ml-[72px] lg:ml-[240px] pb-24 md:pb-8">
-        <div className="px-6 py-6 flex items-center gap-4">
+      <main className="pb-24 md:pb-8">
+        <div className="px-6 py-6 flex items-center gap-4 pt-24">
           <Link href="/" className="md:hidden">
             <ArrowLeft className="w-5 h-5" />
           </Link>

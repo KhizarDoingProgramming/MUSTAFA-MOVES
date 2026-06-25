@@ -100,17 +100,17 @@ export default function ChatPage() {
     <div className="min-h-screen bg-[var(--color-bg-primary)] flex flex-col">
       <Navbar />
       <FloatingAIButton />
-      <main className="md:ml-[72px] lg:ml-[240px] flex flex-col h-screen">
+      <main className="flex flex-col h-screen">
         <motion.header
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="glass-strong border-b border-[var(--color-border)] px-6 py-4 flex items-center gap-4 flex-shrink-0"
+          className="border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)]/50 backdrop-blur-md px-6 py-4 flex items-center gap-4 flex-shrink-0"
         >
           <Link href="/" className="md:hidden">
             <ArrowLeft className="w-5 h-5" />
           </Link>
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--color-accent)] to-purple-600 flex items-center justify-center shadow-lg">
+          <div className="w-10 h-10 rounded-xl bg-[var(--color-accent)]/10 flex items-center justify-center">
             <Bot className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -142,7 +142,7 @@ export default function ChatPage() {
                   className={cn(
                     "w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0",
                     message.role === "assistant"
-                      ? "bg-gradient-to-br from-[var(--color-accent)] to-purple-600"
+                      ? "bg-[var(--color-accent)]/10"
                       : "bg-[var(--color-bg-tertiary)]"
                   )}
                 >
@@ -182,7 +182,7 @@ export default function ChatPage() {
                 exit={{ opacity: 0, y: -10 }}
                 className="flex gap-3 max-w-3xl"
               >
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[var(--color-accent)] to-purple-600 flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 rounded-xl bg-[var(--color-accent)]/10 flex items-center justify-center flex-shrink-0">
                   <Sparkles className="w-4 h-4 text-white" />
                 </div>
                 <div className="bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-2xl rounded-tl-sm px-4 py-3">

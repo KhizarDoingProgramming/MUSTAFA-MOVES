@@ -58,8 +58,8 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-[var(--color-bg-primary)]">
       <Navbar />
       <FloatingAIButton />
-      <main className="md:ml-[72px] lg:ml-[240px] pb-24 md:pb-8">
-        <div className="px-6 py-6 flex items-center gap-4">
+      <main className="pb-24 md:pb-8">
+        <div className="px-6 py-6 flex items-center gap-4 pt-24">
           <Link href="/" className="md:hidden">
             <ArrowLeft className="w-5 h-5" />
           </Link>
@@ -71,7 +71,7 @@ export default function DashboardPage() {
               Welcome back{profile?.name ? `, ${profile.name}` : ""}
             </p>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--color-accent)] to-purple-600 flex items-center justify-center text-white font-bold text-sm shadow-lg">
+          <div className="w-10 h-10 rounded-xl bg-[var(--color-accent)] flex items-center justify-center text-[#1a1a1a] font-bold text-sm">
             {profile?.name?.charAt(0) || "M"}
           </div>
         </div>
@@ -80,10 +80,10 @@ export default function DashboardPage() {
           {/* Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
-              { icon: Flame, label: "Calories", value: "1,325", color: "text-orange-500", bg: "from-orange-500/10 to-red-500/10" },
-              { icon: Dumbbell, label: "Workouts", value: "12", color: "text-[var(--color-accent)]", bg: "from-[var(--color-accent)]/10 to-blue-500/10" },
-              { icon: Zap, label: "Streak", value: "7 days", color: "text-[var(--color-warning)]", bg: "from-yellow-500/10 to-orange-500/10" },
-              { icon: Award, label: "Best Lift", value: "140kg", color: "text-[var(--color-success)]", bg: "from-[var(--color-success)]/10 to-emerald-500/10" },
+              { icon: Flame, label: "Calories", value: "1,325", color: "text-[var(--color-accent)]", bg: "bg-[var(--color-accent)]/10" },
+              { icon: Dumbbell, label: "Workouts", value: "12", color: "text-[var(--color-accent)]", bg: "bg-[var(--color-accent)]/10" },
+              { icon: Zap, label: "Streak", value: "7 days", color: "text-[var(--color-accent)]", bg: "bg-[var(--color-accent)]/10" },
+              { icon: Award, label: "Best Lift", value: "140kg", color: "text-[var(--color-accent)]", bg: "bg-[var(--color-accent)]/10" },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -92,7 +92,7 @@ export default function DashboardPage() {
                 transition={{ duration: 0.4, delay: i * 0.1 }}
               >
                 <Card className="relative overflow-hidden">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${stat.bg} opacity-50`} />
+                  <div className={`absolute inset-0 ${stat.bg} opacity-30`} />
                   <div className="relative">
                     <stat.icon className={`w-5 h-5 ${stat.color} mb-2`} />
                     <div className="text-2xl font-bold font-[family-name:var(--font-space)] tracking-tight">
@@ -125,7 +125,7 @@ export default function DashboardPage() {
                       transition={{ duration: 0.5, delay: i * 0.05, ease: [0.25, 0.1, 0.25, 1] }}
                       className={`w-full rounded-xl ${
                         workoutHistory[i]
-                          ? "bg-gradient-to-t from-[var(--color-accent)] to-blue-500"
+                          ? "bg-[var(--color-accent)]"
                           : "bg-[var(--color-bg-tertiary)]"
                       }`}
                     />
@@ -213,7 +213,7 @@ export default function DashboardPage() {
             <Card glass>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--color-accent)] to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                  <div className="w-16 h-16 rounded-full bg-[var(--color-accent)] flex items-center justify-center text-[#1a1a1a] font-bold text-xl">
                     {profile?.name?.charAt(0) || "M"}
                   </div>
                   <div>
