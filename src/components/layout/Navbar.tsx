@@ -56,13 +56,17 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-            className="fixed inset-0 z-[100] bg-[#0d0d0d] flex flex-col"
+            className="fixed inset-0 z-[100] bg-[#0d0d0d]"
+            onClick={() => setMenuOpen(false)}
           >
-            {/* Close button */}
-            <div className="flex justify-end p-6 md:p-[55px]">
+            {/* Close button — absolutely positioned so nav can be truly centered */}
+            <div className="absolute top-0 right-0 p-6 md:p-[55px] z-10">
               <button
                 type="button"
-                onClick={() => setMenuOpen(false)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setMenuOpen(false);
+                }}
                 className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/70 hover:text-white transition-all"
                 aria-label="Close menu"
               >
@@ -70,8 +74,11 @@ export function Navbar() {
               </button>
             </div>
 
-            {/* Nav links */}
-            <nav className="flex-1 flex flex-col items-center justify-center gap-6 md:gap-8 -mt-20">
+            {/* Nav links — centered in full viewport without overlap */}
+            <nav
+              className="h-full flex flex-col items-center justify-center gap-6 md:gap-8"
+              onClick={(e) => e.stopPropagation()}
+            >
               {navItems.map((item, i) => (
                 <motion.div
                   key={item.href}

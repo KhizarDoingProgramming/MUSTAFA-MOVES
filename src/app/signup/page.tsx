@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Dumbbell, ArrowRight, Mail, Lock, User, Eye, EyeOff, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Navbar } from "@/components/layout/Navbar";
 import { signUp } from "@/lib/auth-service";
 import { images } from "@/data/images";
 
@@ -32,7 +33,8 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0d0d0d] flex overflow-hidden relative">
+    <div className="min-h-screen bg-[#0d0d0d] flex overflow-hidden relative pt-20">
+      <Navbar />
       {/* Animated background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
