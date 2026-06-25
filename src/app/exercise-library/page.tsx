@@ -6,6 +6,7 @@ import { Search, Target, Clock } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { FloatingAIButton } from "@/components/layout/FloatingAIButton";
 import { exercises, Exercise } from "@/data/exercises";
+import { images } from "@/data/images";
 
 const categories = ["All", "Chest", "Back", "Legs", "Shoulders", "Arms", "Core"];
 
@@ -80,8 +81,10 @@ export default function ExerciseLibraryPage() {
                     onClick={() => setSelectedExercise(exercise)}
                     className="w-full text-left bg-card rounded-[var(--radius-xl)] overflow-hidden hover:bg-[var(--color-surface-hover)] hover:border-[var(--color-border-strong)] transition-all duration-300"
                   >
-                    <div className="aspect-video relative bg-gradient-to-br from-[var(--color-accent-soft)] to-transparent flex items-center justify-center">
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d]/60 via-transparent to-transparent" />
+                    <div className="aspect-video relative bg-cover bg-center flex items-center justify-center"
+                      style={{ backgroundImage: `url(${exercise.image})` }}
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d]/80 via-[#0d0d0d]/20 to-transparent" />
                       <div className="absolute bottom-3 left-3 right-3">
                         <h3 className="text-white font-[600] text-lg">{exercise.name}</h3>
                         <div className="flex items-center gap-2 mt-1">
@@ -137,7 +140,9 @@ export default function ExerciseLibraryPage() {
                 className="w-full md:max-w-lg bg-[var(--color-bg-primary)] rounded-t-3xl md:rounded-3xl max-h-[90vh] overflow-y-auto"
               >
                 <div className="relative">
-                  <div className="aspect-video bg-gradient-to-br from-[var(--color-accent-soft)] to-transparent" />
+                  <div className="aspect-video bg-cover bg-center"
+                    style={{ backgroundImage: `url(${selectedExercise.image})` }}
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg-primary)] via-transparent to-transparent" />
                   <button
                     onClick={() => setSelectedExercise(null)}

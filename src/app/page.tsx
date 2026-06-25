@@ -21,6 +21,7 @@ import {
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { FloatingAIButton } from "@/components/layout/FloatingAIButton";
+import { images } from "@/data/images";
 
 const features = [
   {
@@ -138,6 +139,11 @@ export default function HomePage() {
         style={{ opacity: heroOpacity, scale: heroScale }}
         className="h-screen flex flex-col justify-center items-center px-6 relative overflow-hidden"
       >
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${images.hero.gym})` }}
+        />
+        <div className="absolute inset-0 bg-[#0d0d0d]/70" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full bg-[var(--color-accent)]/4 blur-[200px] pointer-events-none" />
 
         <div className="text-center max-w-4xl mx-auto relative z-10 flex flex-col items-center gap-[30px] md:gap-[30px]">
@@ -374,7 +380,9 @@ export default function HomePage() {
           <RevealSection delay={0.15}>
             <div className="relative">
               <div className="bg-card rounded-[var(--radius-2xl)] overflow-hidden">
-                <div className="aspect-[4/3] bg-gradient-to-br from-[var(--color-accent-soft)] to-transparent flex items-center justify-center">
+                <div className="aspect-[4/3] flex items-center justify-center relative"
+                  style={{ backgroundImage: `url(${images.hero.preview})`, backgroundSize: "cover", backgroundPosition: "center" }}
+                >
                   <Bot className="w-24 h-24 text-[var(--color-accent)]/30" />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-transparent rounded-[var(--radius-2xl)]" />
@@ -437,7 +445,11 @@ export default function HomePage() {
       {/* CTA */}
       <section className="section-padding max-w-6xl mx-auto">
         <RevealSection>
-          <div className="relative rounded-[var(--radius-2xl)] overflow-hidden bg-[var(--color-accent)]">
+          <div className="relative rounded-[var(--radius-2xl)] overflow-hidden">
+            <div className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${images.hero.cta})` }}
+            />
+            <div className="absolute inset-0 bg-[var(--color-accent)] mix-blend-multiply" />
             <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-accent)] via-[var(--color-accent-hover)] to-[var(--color-accent)] opacity-50" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_0%,transparent_60%)]" />
             <div className="relative z-10 p-12 md:p-20 text-center">

@@ -6,6 +6,7 @@ import { Dumbbell, ArrowRight, Mail, Lock, Eye, EyeOff, Sparkles } from "lucide-
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { logIn } from "@/lib/auth-service";
+import { images } from "@/data/images";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -155,7 +156,14 @@ export default function LoginPage() {
       </div>
 
       {/* Visual side with animation */}
-      <div className="hidden lg:flex flex-1 relative items-end p-12">
+      <div className="hidden lg:flex flex-1 relative items-end p-12"
+        style={{
+          backgroundImage: `url(${images.auth.login})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-[#0d0d0d]/40 to-[#0d0d0d]/10" />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

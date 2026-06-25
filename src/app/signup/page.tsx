@@ -6,6 +6,7 @@ import { Dumbbell, ArrowRight, Mail, Lock, User, Eye, EyeOff, Sparkles } from "l
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signUp } from "@/lib/auth-service";
+import { images } from "@/data/images";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -47,7 +48,14 @@ export default function SignupPage() {
       </div>
 
       {/* Visual side */}
-      <div className="hidden lg:flex flex-1 relative items-end p-12">
+      <div className="hidden lg:flex flex-1 relative items-end p-12"
+        style={{
+          backgroundImage: `url(${images.auth.signup})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-[#0d0d0d]/40 to-[#0d0d0d]/10" />
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

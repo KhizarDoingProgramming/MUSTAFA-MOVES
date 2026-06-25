@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { FloatingAIButton } from "@/components/layout/FloatingAIButton";
 import { exercises } from "@/data/exercises";
+import { images } from "@/data/images";
 
 const featuredExercises = exercises.slice(0, 4);
 
@@ -16,7 +17,9 @@ export default function ExerciseGuidePage() {
       <FloatingAIButton />
       <main>
         {/* Hero */}
-        <div className="relative h-[60vh] md:h-[70vh] overflow-hidden bg-gradient-to-br from-[var(--color-accent-soft)] to-transparent">
+        <div className="relative h-[60vh] md:h-[70vh] overflow-hidden bg-cover bg-center"
+          style={{ backgroundImage: `url(${images.guide.hero})` }}
+        >
           <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg-primary)] via-[var(--color-bg-primary)]/60 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12">
             <motion.div
@@ -70,8 +73,11 @@ export default function ExerciseGuidePage() {
               >
                 <div className="bg-card rounded-[var(--radius-xl)] overflow-hidden p-0">
                   <div className="flex flex-col md:flex-row">
-                    <div className="md:w-1/2 aspect-video md:aspect-auto bg-gradient-to-br from-[var(--color-accent-soft)] to-transparent flex items-center justify-center">
-                      <Dumbbell className="w-16 h-16 text-[var(--color-accent)]/20" />
+                    <div className="md:w-1/2 aspect-video md:aspect-auto bg-cover bg-center flex items-center justify-center"
+                      style={{ backgroundImage: `url(${exercise.image})` }}
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#0d0d0d]/30 to-transparent" />
+                      <Dumbbell className="w-16 h-16 text-[var(--color-accent)]/20 relative z-10" />
                     </div>
                     <div className="md:w-1/2 p-6 md:p-8 flex flex-col justify-center">
                       <div className="flex items-center gap-2 mb-3">
