@@ -24,7 +24,12 @@ export function Navbar() {
   return (
     <>
       {/* Fixed nav bar — always visible */}
-      <header className="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
+      <header
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 transition-colors duration-300",
+          menuOpen ? "bg-[#0d0d0d]" : "mix-blend-difference"
+        )}
+      >
         <div className="max-w-[1440px] mx-auto px-6 md:px-[55px] h-20 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-white">
             <Dumbbell className="w-5 h-5" />
@@ -34,6 +39,7 @@ export function Navbar() {
           </Link>
 
           <button
+            type="button"
             onClick={() => setMenuOpen(true)}
             className="text-white/80 hover:text-white transition-colors text-sm font-[500] tracking-wide uppercase"
           >
@@ -55,10 +61,12 @@ export function Navbar() {
             {/* Close button */}
             <div className="flex justify-end p-6 md:p-[55px]">
               <button
+                type="button"
                 onClick={() => setMenuOpen(false)}
-                className="text-white/60 hover:text-white transition-colors"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/70 hover:text-white transition-all"
+                aria-label="Close menu"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
