@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏋️ MustafaMoves
 
-## Getting Started
+> AI-powered fitness coach that actually gets you. No cap.
 
-First, run the development server:
+[![Live Demo](https://img.shields.io/badge/LIVE-mustafamoves.vercel.app-gold?style=for-the-badge&logo=vercel)](https://mustafamoves.vercel.app)
+
+---
+
+## ✨ what's this?
+
+**MustafaMoves** is a full-stack fitness app built with Next.js 16. Talk to **Mstfa** — your personal AI coach — and get custom workout plans, track progress, and level up. All with a dark, aesthetic UI inspired by kerna.studio.
+
+### 🔥 features
+
+- **AI Coach Mstfa** — chat with an AI that builds plans around *your* goals, not some generic template
+- **Exercise Library** — 100+ exercises with form guides, sets, reps, and rest times
+- **Smart Workout Generator** — age, weight, height, goal → weekly plan in seconds
+- **Dashboard** — streaks, calories, workout history, AI recommendations
+- **PDF Export** — download your plans and take 'em to the gym
+- **Dark Aesthetic** — gold accents, smooth animations, Instrument Sans font
+
+---
+
+## 🛠️ stack
+
+| what | who |
+|------|-----|
+| Framework | Next.js 16 (App Router) |
+| Auth + DB | Firebase Auth + Firestore |
+| AI | Groq API (llama-3.3-70b) |
+| Styling | Tailwind CSS v4 |
+| Animations | Framer Motion |
+| Fonts | Instrument Sans, Space Grotesk, Inter |
+| Hosting | Vercel |
+
+---
+
+## 🚀 getting started
+
+```bash
+git clone https://github.com/KhizarDoingProgramming/MUSTAFA-MOVES.git
+cd MUSTAFA-MOVES
+npm install
+```
+
+### env vars
+
+Copy `.env.local.example` to `.env.local` and fill in:
+
+```
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
+GROQ_API_KEY=
+```
+
+### run it
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📦 images
 
-## Learn More
+Drop exercise & auth images into `public/images/` matching the structure in [`images.md`](./images.md). Already uploaded in this repo.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🌐 live
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+👉 **[mustafamoves.vercel.app](https://mustafamoves.vercel.app)**
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+built with intensity by [@KhizarDoingProgramming](https://github.com/KhizarDoingProgramming)
